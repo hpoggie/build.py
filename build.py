@@ -87,7 +87,5 @@ if __name__ == "__main__":
             """
     elif "--install" in args:
         subprocess.check_call(['ln', '-s', './build.py', os.path.expanduser('~') + '/bin/build.py'])
-    elif "--uninstall" in args:
-        subprocess.check_call(['rm', os.path.expanduser('~') + '/bin/build.py'])
     else:
         build(args)
