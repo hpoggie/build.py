@@ -19,15 +19,24 @@ def prepareBuildFolder ():
     if not hasBuildFolder:
         os.mkdir(".build")
 
+def findFile (filename):
+    for d in os.walk('.'):
+        for f in d[2]:
+            if f == filename:
+                return d[0] + '/' + filename
+
+    raise OSError("Could not find file " + filename)
+
 def getIncludes (filename):
     includes = []
     f = open(filename)
     for line in f.readlines():
         if line.startswith("#include"):
-            headerFile = line.split(" ")[1].strip("\"<>\n")
+            headerFile = line.split(' ')[1].split('/')[-1].strip("\"<>\n")
             if headerFile not in set(os.listdir("/usr/include")):
-                includes.append(headerFile)
-                includes += getIncludes(headerFile)
+                path = findFile(headerFile)
+                includes.append(path)
+                includes += getIncludes(path)
 
     return includes
 
