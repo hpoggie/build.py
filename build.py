@@ -85,5 +85,7 @@ if __name__ == "__main__":
             This script builds your files to a hidden folder called .build
             Just run .build/a.out
             """
+    elif "--install" in args:
+        subprocess.check_call(['ln', '-s', './build.py', os.path.expanduser('~') + '/bin/build.py'])
     else:
         build(args)
