@@ -76,7 +76,10 @@ def build (args):
     generateMakefile(filename)
 
     if make:
-        subprocess.check_call(['make', '-f', '.build/makefile'])
+        try:
+            subprocess.check_call(['make', '-f', '.build/makefile'])
+        except subprocess.CalledProcessError:
+            return
 
     if run:
         subprocess.check_call(['.build/a.out'])
