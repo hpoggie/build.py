@@ -3,6 +3,7 @@
 Takes care of linking headers for you.
 Run this on your main program to build it. Built files go in the .build folder.
 """
+#TODO: check for redundant headers
 
 import subprocess
 import sys
