@@ -33,10 +33,13 @@ def getIncludes (filename):
     for line in f.readlines():
         if line.startswith("#include"):
             headerFile = line.split(' ')[1].split('/')[-1].strip("\"<>\n")
-            if headerFile not in set(os.listdir("/usr/include")):
-                path = findFile(headerFile.replace(".h", ".c"))
-                includes.append(path)
-                includes += getIncludes(path)
+            if headerFile not in os.listdir("/usr/include"):
+                try:
+                    path = findFile(headerFile.replace(".h", ".c"))
+                    includes.append(path)
+                    includes += getIncludes(path)
+                except OSError:
+                    pass
 
     return includes
 
