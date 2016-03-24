@@ -92,7 +92,7 @@ if __name__ == "__main__":
     if len(args) == 0 or "--help" in args:
         print """
             -r: run after building
-            -m: only generate makefiles, don't build
+            -m: only generate makefiles, don't build (after doing this you can run make with make -f .build/makefile)
 
             This script builds your files to a hidden folder called .build
             Just run .build/a.out
