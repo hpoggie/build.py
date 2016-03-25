@@ -37,9 +37,8 @@ def getIncludes (filename):
             if headerFile not in os.listdir("/usr/include"):
                 try:
                     path = findFile(headerFile.replace(".h", ".c"))
-                    if path not in includes:
-                        includes.append(path)
-                        includes += getIncludes(path)
+                    includes.append(path)
+                    includes += getIncludes(path)
                 except OSError:
                     pass
 
