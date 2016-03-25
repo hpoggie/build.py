@@ -3,7 +3,6 @@
 Takes care of linking headers for you.
 Run this on your main program to build it. Built files go in the .build folder.
 """
-#TODO: check for redundant headers
 
 import subprocess
 import sys
@@ -30,17 +29,22 @@ def findFile (filename):
 
 def getIncludes (filename):
     includes = []
-    f = open(filename)
-    for line in f.readlines():
-        if line.startswith("#include"):
-            headerFile = line.split(' ')[1].split('/')[-1].strip("\"<>\n")
-            if headerFile not in os.listdir("/usr/include"):
-                try:
-                    path = findFile(headerFile.replace(".h", ".c"))
-                    includes.append(path)
-                    includes += getIncludes(path)
-                except OSError:
-                    pass
+
+    def getCFiles (filename, includes):
+        f = open(filename)
+        for line in f.readlines():
+            if line.startswith("#include"):
+                headerFile = line.split(' ')[1].split('/')[-1].strip("\"<>\n")
+                if headerFile not in os.listdir("/usr/include"):
+                    try:
+                        path = findFile(headerFile.replace(".h", ".c"))
+                        if path not in includes:
+                            includes.append(path)
+                            getCFiles(path, includes)
+                    except OSError:
+                        pass
+
+    getCFiles(filename, includes)
 
     return includes
 
