@@ -27,7 +27,7 @@ def findFile (filename):
 
     raise OSError("Could not find file " + filename)
 
-def getIncludes (filename):
+def getTargets (filename):
     includes = []
 
     def getCFiles (filename, includes):
@@ -52,7 +52,7 @@ def generateMakefile (filename):
     f = open(".build/makefile", 'w')
 
     target_all = "\t" + ' '.join(gccArgs)
-    target_all += " " + ' '.join(getIncludes(filename))
+    target_all += " " + ' '.join(getTargets(filename))
     target_all += " " + filename
     target_all += '\n'
 
