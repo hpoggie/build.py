@@ -28,9 +28,9 @@ def findFile (filename):
     raise OSError("Could not find file " + filename)
 
 def getTargets (filename):
-    includes = []
+    targets = []
 
-    def getCFiles (filename, includes):
+    def getCFiles (filename, targets):
         f = open(filename)
         for line in f.readlines():
             if line.startswith("#include"):
@@ -38,15 +38,15 @@ def getTargets (filename):
                 if headerFile not in os.listdir("/usr/include"):
                     try:
                         path = findFile(headerFile.replace(".h", ".c"))
-                        if path not in includes:
-                            includes.append(path)
-                            getCFiles(path, includes)
+                        if path not in targets:
+                            targets.append(path)
+                            getCFiles(path, targets)
                     except OSError:
                         pass
 
-    getCFiles(filename, includes)
+    getCFiles(filename, targets)
 
-    return includes
+    return targets
 
 def generateMakefile (filename):
     f = open(".build/makefile", 'w')
