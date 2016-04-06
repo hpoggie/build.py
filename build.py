@@ -1,6 +1,5 @@
 #!/usr/bin/python
 """
-Takes care of linking headers for you.
 Run this on your main program to build it. Built files go in the .build folder.
 """
 
